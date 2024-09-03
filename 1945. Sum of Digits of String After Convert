@@ -1,0 +1,33 @@
+class Solution {
+public:
+    string convertInt(string s) {
+        string a = "";
+        int num;
+        for (int i=0; i<s.length(); i++) {
+            if (s[i] >= 'a' && s[i] <= 'z') {
+                num = s[i] - 'a' + 1;
+            } else {
+                num = s[i] - '0';
+            }
+            a += to_string(num);
+        }
+        return a;
+    }
+    int calculateValue(string a) {
+        int ans = 0;
+        for (int i=0; i<a.length(); i++) {
+            ans += (a[i]-'0');
+        }
+        return ans;
+    }
+    int getLucky(string s, int k) {
+        int ans = 0;
+        string a = s;
+        while(k--) {
+            a = convertInt(a);
+            ans = calculateValue(a);
+            a = to_string(ans);
+        }
+        return ans;
+    }
+};
