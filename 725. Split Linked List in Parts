@@ -1,0 +1,64 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    int findCountNodes(ListNode * head) {
+        int count = 0;
+        ListNode * itr = head;
+        while(itr != NULL) {
+            count++;
+            itr = itr->next;
+        }
+        return count;
+    }
+    vector<ListNode*> splitListToParts(ListNode* head, int k) {
+        vector<ListNode *> ans;
+        int totalNodes = findCountNodes(head);
+        int totalElements = totalNodes / k;
+        int extraElements = totalNodes % k;
+        ListNode * itr = head, *last = NULL;
+        int i=0;
+        while(itr != NULL) {
+            i = 0;
+            ListNode * temp = NULL;
+            while(i < totalElements) {
+                if (temp == NULL) {
+                    temp = new ListNode(itr->val);
+                    temp->next = NULL;
+                    last = temp;
+                } else {
+                    ListNode * temp1 = new ListNode(itr->val);
+                    temp1->next = NULL;
+                    last->next = temp1;
+                    last = temp1;
+                }
+                i++;
+                itr = itr->next;
+            }
+            if (extraElements) {
+                ListNode * temp1 = new ListNode(itr->val);
+                if (temp == NULL) {
+                    temp = temp1;
+                } else {
+                    temp1->next = last->next;
+                    last->next = temp1;
+                }
+                itr = itr->next;
+                extraElements--;
+            } 
+            ans.push_back(temp);
+        }
+        while(ans.size() != k) {
+            ans.push_back(NULL);
+        }
+        return ans;
+    }
+};
