@@ -1,0 +1,28 @@
+class Solution {
+public:
+    bool check(int count[], int count2[]) {
+        for (int i=0; i<26; i++) {
+            if (count[i] == 0 && count[i] < count2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    int countConsistentStrings(string allowed, vector<string>& words) {
+        int count[26] = {0};
+        for (int i=0; i<allowed.size(); i++) {
+            count[allowed[i] - 'a']++;
+        }
+        int ans = 0;
+        for (auto i : words) {
+            int count2[26] = {0};
+            for (auto j : i) {
+                count2[j - 'a']++;
+            }
+            if (check(count, count2)) {
+                ans++;
+            }
+        }
+        return ans;
+    }
+};
